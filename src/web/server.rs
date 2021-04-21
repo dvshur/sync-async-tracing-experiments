@@ -19,7 +19,7 @@ pub async fn start(repo: repo::Sync) {
         .and(warp::path::end())
         .and(with_repo.clone())
         .and_then(|r: repo::Sync| async move {
-            r.fetch(());
+            r.fetch(()); // instrumented sync call
             // tokio::task::spawn_blocking(move || r.fetch(())).await;
             Result::<_, Infallible>::Ok(warp::reply())
         })
