@@ -5,7 +5,7 @@ use std::{
         Arc,
     },
 };
-use tracing::{instrument, trace};
+use tracing::{instrument, debug};
 
 #[derive(Debug, Clone)]
 pub struct Sync {
@@ -24,13 +24,13 @@ impl Sync {
         let threads_before = self.concurrent_threads.fetch_add(1, Ordering::SeqCst);
         let threads = threads_before + 1;
 
-        trace!(threads, "start");
+        debug!(threads, "start");
 
         std::thread::sleep(std::time::Duration::from_secs(2));
 
         self.concurrent_threads.fetch_sub(1, Ordering::SeqCst);
 
-        trace!(threads, "end");
+        debug!(threads, "end");
 
         a
     }
