@@ -1,12 +1,13 @@
 use std::sync::Arc;
 use std::time::Duration;
-use tracing::{debug, info};
+use tracing::{instrument, debug, info};
 
 mod upstream_params {
     pub const REQUEST_TIMEOUT_SECS: u64 = 30;
     pub const CONNECT_TIMEOUT_SECS: u64 = 5;
 }
 
+#[instrument]
 pub async fn start(timeout: Duration, workers: usize) {
     tokio::time::sleep(Duration::from_secs(5)).await;
 
